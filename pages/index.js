@@ -16,12 +16,12 @@ const events = {
     width: 500,
   },
   lectures: {
-    arr: [0, 0, 0, 0, 0, 0, 0, 0],
+    arr: [0, 1, 2, 3, 4],
     height: 350,
     width: 300,
   },
   workshops: {
-    arr: [0, 0, 0, 0],
+    arr: [0],
     height: 400,
     width: 500,
   },
@@ -50,6 +50,18 @@ const footerItems = [
 const Home = () => {
   const [eventTab, setEventTab] = useState(0);
   const { width } = useWindowDimensions();
+
+  const onPlayerReady = (event) => {
+    event.target.pauseVideo();
+  };
+
+  const opts = {
+    height: "390",
+    width: "640",
+    playerVars: {
+      autoplay: 1,
+    },
+  };
 
   return (
     <div className={styles.container}>
@@ -85,7 +97,10 @@ const Home = () => {
 
         <section className={styles.hero}>
           <video autoPlay={true} muted loop className={styles.video}>
-            <source src="/videos/waves.mp4" type="video/mp4" />
+            <source
+              src="https://waveziitm.s3.ap-south-1.amazonaws.com/wavez_theme_video.mp4"
+              type="video/mp4"
+            />
           </video>
 
           <div className={styles.heroContent}>
