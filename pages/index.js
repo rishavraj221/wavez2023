@@ -11,7 +11,7 @@ const wid_break = 800;
 
 const events = {
   competitions: {
-    arr: [0, 0, 0, 0],
+    arr: [0, 1, 2, 3],
     height: 400,
     width: 500,
   },
