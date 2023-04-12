@@ -415,8 +415,8 @@ const Home = () => {
                 <div key={i} className={styles.gridItem}>
                   <Image
                     src={`/sponsors/${t}.png`} // Route of the image file
-                    height={150} // Desired size with correct aspect ratio
-                    width={300} // Desired size with correct aspect ratio
+                    height={width > wid_break ? 150 : 80} // Desired size with correct aspect ratio
+                    width={width > wid_break ? 300 : 160} // Desired size with correct aspect ratio
                     alt="Wavez"
                   />
                 </div>
@@ -436,8 +436,8 @@ const Home = () => {
                 <div key={i} className={styles.gridItem}>
                   <Image
                     src={`/sponsors/${t}.png`} // Route of the image file
-                    height={300} // Desired size with correct aspect ratio
-                    width={300} // Desired size with correct aspect ratio
+                    height={width > wid_break ? 300 : 160} // Desired size with correct aspect ratio
+                    width={width > wid_break ? 300 : 160} // Desired size with correct aspect ratio
                     alt="Wavez"
                   />
                 </div>
