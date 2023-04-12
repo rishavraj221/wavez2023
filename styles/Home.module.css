@@ -245,6 +245,50 @@
   text-align: center;
 }
 
+.modalHead {
+  font-family: "Poppins-Bold";
+  font-size: 40px;
+  line-height: 45px;
+  letter-spacing: -0.015em;
+  color: #000000;
+}
+
+.modalDesc {
+  font-family: "Poppins-Light";
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.015em;
+  color: #000000;
+}
+
+.modalDetCont {
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.modalDetDataCont {
+  margin-right: 50px;
+}
+
+.modalDetHead {
+  font-family: "Poppins-Bold";
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.015em;
+  color: #000000;
+}
+
+.modalDetDesc {
+  font-family: "Poppins-Light";
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: -0.015em;
+  color: #787878;
+  margin: 8px 0;
+}
+
 @media (max-width: 800px) {
   .header {
     padding: 0 3%;
@@ -382,5 +426,37 @@
   .copyright {
     font-size: 12px;
     line-height: 24px;
+  }
+
+  .modalHead {
+    font-size: 25px;
+    line-height: 25px;
+  }
+
+  .modalDesc {
+    font-size: 15px;
+    line-height: 18px;
+  }
+
+  .modalDetCont {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .modalDetDataCont {
+    margin: 20px 0;
+  }
+
+  .modalDetHead {
+    font-size: 15px;
+    line-height: 18px;
+  }
+
+  .modalDetDesc {
+    font-size: 12px;
+    line-height: 15px;
+    margin: 5px 0;
   }
 }

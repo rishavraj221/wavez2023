@@ -1,17 +1,118 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import Modal from "react-modal";
 
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import styles from "../styles/Home.module.css";
 import sec2BGImg from "../public/section2_background.svg";
+
+const customStyles = (width) => {
+  return {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      width,
+      transform: "translate(-50%, -50%)",
+    },
+    overlay: {
+      position: "fixed",
+      zIndex: 1020,
+      top: 0,
+      left: 0,
+      width: "100vw",
+      height: "100vh",
+      background: "rgba(0, 0, 0, 0.75)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+  };
+};
 
 const wid_break = 800;
 
 const events = {
   competitions: {
     arr: [0, 1, 2, 3],
+    detailData: [
+      {
+        head: "ROV Mania",
+        desc: "In this competition, teams will design, build, and operate ROVs (Remotely Operated Vehicle) capable of maneuvering through obstacles and detecting objects. Participants will showcase their technical expertise and problem-solving skills as they compete in maneuvering and detection tasks.",
+        details: [
+          {
+            head: "Cash Prize",
+            value: "1,50,000",
+          },
+          {
+            head: "Date and Time",
+            value: "15 Apr - 01:00 PM",
+          },
+          {
+            head: "Venue",
+            value: "DOE - Wave Basin, IITM",
+          },
+        ],
+      },
+      {
+        head: "ML for oceanography",
+        desc: "Machine Learning competition on Kaggle, where the problem statement focuses on Ocean Engineering concepts. Participants will need to apply their predictive analysis skills to develop machine learning models, followed by a data-driven case study. Top teams get to present their solutions to take home the cash prize.",
+        details: [
+          {
+            head: "Cash Prize",
+            value: "50,000",
+          },
+          {
+            head: "Date and Time",
+            value: "15 Apr - 02:00 PM",
+          },
+          {
+            head: "Venue",
+            value: "DOE - Seminal Hall, IITM",
+          },
+        ],
+      },
+      {
+        head: "Ensemble: Float a Boat",
+        desc: "Participants will have limited time to design and construct ship hulls using provided materials. The vessels will then be tested in Towing tank and Wave condition tests, demonstrating participants strategic and creative skills.",
+        details: [
+          {
+            head: "Cash Prize",
+            value: "8,000",
+          },
+          {
+            head: "Date and Time",
+            value: "16 Apr - 10:00 AM",
+          },
+          {
+            head: "Venue",
+            value: "DOE - Wave Basin, IITM",
+          },
+        ],
+      },
+      {
+        head: "Ocean Engineering for Kids",
+        desc: "Exciting painting competition, essay writing and quiz events for kids where they get to show off their artistic skills and creativity and win fantastic prizes. Don't miss out on the fun - sign up your kids today!",
+        details: [
+          {
+            head: "Cash Prize",
+            value: "5,000",
+          },
+          {
+            head: "Date and Time",
+            value: "16 Apr - 09:00 AM",
+          },
+          {
+            head: "Venue",
+            value: "DOE - Seminar Hall, IITM",
+          },
+        ],
+      },
+    ],
     height: 400,
     width: 500,
   },
@@ -28,6 +129,8 @@ const events = {
 };
 
 const teams = [0, 1, 2, 3, 4, 5, 6, 7];
+
+const sponsors = [0, 1, 2, 3, 4];
 
 const footerItems = [
   {
@@ -51,17 +154,24 @@ const Home = () => {
   const [eventTab, setEventTab] = useState(0);
   const { width } = useWindowDimensions();
 
-  const onPlayerReady = (event) => {
-    event.target.pauseVideo();
-  };
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalData, setModalData] = useState({});
 
-  const opts = {
-    height: "390",
-    width: "640",
-    playerVars: {
-      autoplay: 1,
-    },
-  };
+  useEffect(() => {
+    setModalData(events.competitions.detailData[0]);
+  }, []);
+
+  let subtitle;
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {}
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   return (
     <div className={styles.container}>
@@ -86,14 +196,33 @@ const Home = () => {
             <Link href="#events" scroll={false}>
               <div className={styles.headerBtn}>Events</div>
             </Link>
-            <Link href="#" scroll={false}>
+            <Link href="#sponsors" scroll={false}>
               <div className={styles.headerBtn}>Sponsors</div>
             </Link>
-            <Link href="#" scroll={false}>
+            <Link href="#contactUs" scroll={false}>
               <div className={styles.headerBtn}>Contact Us</div>
             </Link>
           </div>
         </header>
+
+        <Modal
+          isOpen={modalData && modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles(width > wid_break ? "60%" : "95%")}
+          contentLabel="Example Modal"
+        >
+          <h2 className={styles.modalHead}>{modalData?.head}</h2>
+          <div className={styles.modalDesc}>{modalData?.desc}</div>
+          <div className={styles.modalDetCont}>
+            {modalData?.details?.map((dt, i) => (
+              <div key={i} className={styles.modalDetDataCont}>
+                <div className={styles.modalDetHead}>{dt.head}</div>
+                <div className={styles.modalDetDesc}>{dt.value}</div>
+              </div>
+            ))}
+          </div>
+        </Modal>
 
         <section className={styles.hero}>
           <video autoPlay={true} muted loop className={styles.video}>
@@ -191,8 +320,18 @@ const Home = () => {
             }}
           >
             {events[Object.keys(events)[eventTab]].arr.map((num, i) => (
-              <div key={i} className={styles.gridItem}>
+              <div
+                key={i}
+                className={styles.gridItem}
+                onClick={() => {
+                  if (eventTab === 0) {
+                    setModalData(events.competitions.detailData[i]);
+                    openModal();
+                  }
+                }}
+              >
                 <Image
+                  className="pointer"
                   src={`/events/${Object.keys(events)[eventTab]}/${num}.svg`} // Route of the image file
                   height={events[Object.keys(events)[eventTab]].height} // Desired size with correct aspect ratio
                   width={events[Object.keys(events)[eventTab]].width} // Desired size with correct aspect ratio
@@ -252,7 +391,62 @@ const Home = () => {
           </div>
         </section>
 
-        <footer className={styles.footer}>
+        <section
+          id="sponsors"
+          className={styles.section6}
+          style={{ marginTop: width > wid_break ? 0 : 0 }}
+        >
+          <div
+            className={styles.sec2LeftHeader}
+            style={{ textAlign: "center" }}
+          >
+            Our Sponsors
+          </div>
+
+          <div
+            className={styles.cardsContainer}
+            style={{
+              gridTemplateColumns: width > wid_break ? "auto auto" : "auto",
+            }}
+          >
+            {sponsors.map((t, i) => {
+              if (t > 1) return <></>;
+              return (
+                <div key={i} className={styles.gridItem}>
+                  <Image
+                    src={`/sponsors/${t}.png`} // Route of the image file
+                    height={150} // Desired size with correct aspect ratio
+                    width={300} // Desired size with correct aspect ratio
+                    alt="Wavez"
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <div
+            className={styles.cardsContainer}
+            style={{
+              gridTemplateColumns:
+                width > wid_break ? "auto auto auto" : "auto",
+            }}
+          >
+            {sponsors.map((t, i) => {
+              if (t <= 1) return <></>;
+              return (
+                <div key={i} className={styles.gridItem}>
+                  <Image
+                    src={`/sponsors/${t}.png`} // Route of the image file
+                    height={300} // Desired size with correct aspect ratio
+                    width={300} // Desired size with correct aspect ratio
+                    alt="Wavez"
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <footer id="contactUs" className={styles.footer}>
           <div className={styles.footerSec1}>
             <div className={styles.footerLeftCont}>
               <div className={styles.footerHeader}>Contact Us</div>
