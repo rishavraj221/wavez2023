@@ -123,6 +123,26 @@ const events = {
   },
   workshops: {
     arr: [0],
+    detailData: [
+      {
+        head: "ALL ABOUT DIGITAL MARKETING",
+        desc: "Looking to enhance your digital marketing skills? Join Rishi Jain's workshop and gain insights into the latest trends and techniques in the industry. With Rishi's expertise and guidance, you'll learn how to optimize your digital presence and grow your business online. Don't miss out on this invaluable opportunity to elevate your marketing game!",
+        details: [
+          {
+            head: "Registration",
+            value: "Free",
+          },
+          {
+            head: "Date and Time",
+            value: "16 Apr - 12:00 PM",
+          },
+          {
+            head: "Venue",
+            value: "CLT",
+          },
+        ],
+      },
+    ],
     height: 400,
     width: 500,
   },
@@ -147,6 +167,21 @@ const footerItems = [
     icon: "email",
     text: "oceana@doe.iitm.ac.in",
     href: "mailto:oceana@doe.iitm.ac.in",
+  },
+];
+
+const footerSocial = [
+  {
+    icon: "facebook",
+    url: "https://www.facebook.com/Wavez.iitm/",
+  },
+  {
+    icon: "instagram",
+    url: "https://www.instagram.com/oceana_iitm/",
+  },
+  {
+    icon: "linkedin",
+    url: "https://www.linkedin.com/company/oceana-iit-madras/",
   },
 ];
 
@@ -324,8 +359,10 @@ const Home = () => {
                 key={i}
                 className={styles.gridItem}
                 onClick={() => {
-                  if (eventTab === 0) {
-                    setModalData(events.competitions.detailData[i]);
+                  if (eventTab === 0 || eventTab === 2) {
+                    setModalData(
+                      events[Object.keys(events)[eventTab]].detailData[i]
+                    );
                     openModal();
                   }
                 }}
@@ -416,7 +453,7 @@ const Home = () => {
                   <Image
                     src={`/sponsors/${t}.png`} // Route of the image file
                     height={width > wid_break ? 150 : 80} // Desired size with correct aspect ratio
-                    width={width > wid_break ? 300 : 160} // Desired size with correct aspect ratio
+                    width={width > wid_break ? 240 : 130} // Desired size with correct aspect ratio
                     alt="Wavez"
                   />
                 </div>
@@ -436,8 +473,8 @@ const Home = () => {
                 <div key={i} className={styles.gridItem}>
                   <Image
                     src={`/sponsors/${t}.png`} // Route of the image file
-                    height={width > wid_break ? 300 : 160} // Desired size with correct aspect ratio
-                    width={width > wid_break ? 300 : 160} // Desired size with correct aspect ratio
+                    height={width > wid_break ? 240 : 130} // Desired size with correct aspect ratio
+                    width={width > wid_break ? 240 : 130} // Desired size with correct aspect ratio
                     alt="Wavez"
                   />
                 </div>
@@ -458,27 +495,37 @@ const Home = () => {
                     width={30} // Desired size with correct aspect ratio
                     alt="Wavez"
                   />
-                  <Link key={i} href={item.href} target="_blank">
+                  <a key={i} href={item.href} target="_blank">
                     <div className={styles.footerItemText}>{item.text}</div>
-                  </Link>
+                  </a>
                 </div>
               ))}
             </div>
             <div className={styles.footerRightCont}>
-              {["facebook", "linkedin", "instagram"].map((s, i) => (
+              {footerSocial.map((s, i) => (
                 <div key={i} className={styles.socialIcon}>
-                  <Image
-                    src={`/icons/${s}.svg`} // Route of the image file
-                    height={40} // Desired size with correct aspect ratio
-                    width={40} // Desired size with correct aspect ratio
-                    alt="Wavez"
-                  />
+                  <a href={s.url} target="_blank">
+                    <Image
+                      src={`/icons/${s.icon}.svg`} // Route of the image file
+                      height={40} // Desired size with correct aspect ratio
+                      width={40} // Desired size with correct aspect ratio
+                      alt="Wavez"
+                    />
+                  </a>
                 </div>
               ))}
             </div>
           </div>
           <div className={styles.copyright}>
-            © Copyright 2023. All Rights Reserved.
+            Developed with ❤️ by{" "}
+            <a
+              href="https://www.linkedin.com/in/rishav-raj-2639341a5/"
+              target="_blank"
+              style={{ textDecoration: "underline" }}
+            >
+              Rishav Raj
+            </a>
+            .
           </div>
         </footer>
       </main>
